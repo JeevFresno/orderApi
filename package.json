@@ -1,0 +1,17 @@
+{
+  "name": "shiptapi",
+  "version": "1.0.0",
+  "description": "shipt software engineer challenge",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jeevjyot Singh Chhabda",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.10",
+    "pg": "^7.3.0"
+  }
+}

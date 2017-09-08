@@ -21,4 +21,16 @@ app.use('/',function(req,res){
     });
 });
 
+
+//catching all the unrouted routes
+app.all('*', function(req, res) {
+    throw new Error("Bad request")
+});
+
+//error handling middleware
+app.use(function(e, req, res, next) {
+    if (e.message === "Bad request") {
+        res.status(400).json({error: {msg: e.message, stack: e.stack}});
+    }
+});
 module.exports = app;

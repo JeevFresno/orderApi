@@ -82,12 +82,14 @@ function createUser(req,res,next){
 
     }else{
 
-        var query ="INSERT INTO CUSTOMER(firstname,email) values($1,$2)";
+        var query ="INSERT INTO CUSTOMER(firstname,email) values($1,$2) Returning *";
         try{
             client.query(query,[name,email],function(err,data){
-
-                res.status(200).json({
-                    message:'User Created'
+                console.log(data.rows[0].id);
+                res.status(201).json({
+                    status:201,
+                    message:'User Created',
+                    UserID: data.rows[0].id
                 })
             });
         }catch(err){
@@ -99,6 +101,22 @@ function createUser(req,res,next){
     }
 }
 
+function allOrdersInDB(req,res){
+
+    var query="SELECT * from orders";
+    client.query(query,function(err,data){
+        if(err){
+            res.status(400).json({
+                messages:'Failed'
+            })
+        }else{
+            res.status(400).json({
+                messages:'All orders',
+                orders:data.rows
+            });
+        }
+    });
+}
 
 function allOrdersOfUsers(req,res,next){
 
@@ -324,7 +342,7 @@ function sqlQuery(req,res,next){
 
     client.query(query,function(err,data){
         try{
-            res.status(200).json({
+            res.status(200).send({
                 status: 'success',
                 data: data.rows
             });
@@ -352,6 +370,7 @@ module.exports={
     insertOrderOfUser: insertOrderOfUser,
     allOrdersOfUsers: allOrdersOfUsers,
     sqlQuery: sqlQuery,
-    productBreakDownByDate:productBreakDownByDate
+    productBreakDownByDate:productBreakDownByDate,
+    allOrdersInDB:allOrdersInDB
 };
 

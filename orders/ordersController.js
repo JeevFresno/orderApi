@@ -8,12 +8,8 @@ router.use(bodyParser.urlencoded({ extended :true}));
 var orderFunction = require('../db');
 //var cl = require('../populateDB');
 //returning all the orders
-router.get('/',function(req,res){
-    res.status(200).json({
-        status:'200',
-        message: 'returning all the orders in the database'
-    })
-});
+router.get('/',orderFunction.allOrdersInDB);
+
 
 
 //returns all the orders of the user

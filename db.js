@@ -4,14 +4,14 @@
 //mongoose.connection.openUri('mongodb://root:root@ds121674.mlab.com:21674/dummydb')
 
 var pg = require('pg');
-var conString ="postgres://localhost:5432/shiptdb";
-
+var conString ="postgres://zykgddocgxmjsg:c6bd27fb311a865ec0b70a54ef83c2db216d78de7958ffa46f854b8f37c6baee@ec2-107-22-211-182.compute-1.amazonaws.com:5432/d5ptk1vsj4nrt2?ssl=true";
+pg.defaults.ssl = true;
 var client = new pg.Client(conString);
 
 //connecting to the database
    client.connect(function(err){
         if(err)
-            return "Error Connecting to the database";
+            console.log(err.stack);
         else
             console.log("Connected to the database");
     });

@@ -1,5 +1,5 @@
 
-//app.js
+//app.js, handles all the routes of the api
 
 var express = require('express');
 var app = express();
@@ -15,7 +15,10 @@ app.use('/orders', orderController);
 app.use('/logistics',logisticController);
 
 app.use('/',function(req,res){
+    res.status(200).json({
+        status:200,
+        message: 'api is active and functional, thanks for visiting.'
+    });
+});
 
-    res.status(200).send('Welcome');
-})
 module.exports = app;

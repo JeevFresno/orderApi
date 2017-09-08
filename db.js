@@ -1,7 +1,8 @@
 //db.js
 
-//var mongoose = require('mongoose');
-//mongoose.connection.openUri('mongodb://root:root@ds121674.mlab.com:21674/dummydb')
+/*
+This JS connects to the database and consist of all the methods which require talking to database, almost all the features reside here
+ */
 
 var pg = require('pg');
 var conString ="postgres://zykgddocgxmjsg:c6bd27fb311a865ec0b70a54ef83c2db216d78de7958ffa46f854b8f37c6baee@ec2-107-22-211-182.compute-1.amazonaws.com:5432/d5ptk1vsj4nrt2?ssl=true";
@@ -33,7 +34,6 @@ function getAllUsers(req,res,next){
             });
 
         });
-
     }catch(err){
         res.status(500).json({
             message : err.status
@@ -101,6 +101,7 @@ function createUser(req,res,next){
     }
 }
 
+//RETRIEVES ALL THE ORDERS FROM THE DATABASE
 function allOrdersInDB(req,res){
 
     var query="SELECT * from orders";
@@ -118,6 +119,7 @@ function allOrdersInDB(req,res){
     });
 }
 
+//RETRIVE ALL THE ORDER OF SPECIFIC USER
 function allOrdersOfUsers(req,res,next){
 
     var id = req.params.userID;
@@ -146,6 +148,7 @@ function allOrdersOfUsers(req,res,next){
         }
     }
 }
+
 //grouping the data based on the order_id
 var groupBy = function(xs, key) {
     return xs.reduce(function(rv, x) {
@@ -226,6 +229,8 @@ function auxInsertOrderDetails(req,res){
     }
     results =[];
 }
+
+//METHOD TO FIND ALL THE CATEGORIES OF PRODUCTS PURCHASED BY THE USER
 function auxFindTheCategory(item,req,res){
 
     console.log(item);
@@ -257,6 +262,7 @@ function productBreakDownByDate(req,res){
 
     var startDate=req.params.startDate;
     var endDate=req.params.endDate;
+
     auxGenerateDays(startDate,endDate);
     setTimeout(function(){
         var groupedByDate=groupBy(dateRange, 'date');
@@ -352,21 +358,13 @@ function sqlQuery(req,res,next){
     })
 };
 //updating the user
-function updateUser(req,res,next){
 
-}
-
-function deleteUser(req,res,next){
-
-}
 
 //exporting out the user's function
 module.exports={
     getAllUsers: getAllUsers,
     getSingleUser: getSingleUser,
     createUser: createUser,
-    updateUser: updateUser,
-    deleteUser: deleteUser,
     insertOrderOfUser: insertOrderOfUser,
     allOrdersOfUsers: allOrdersOfUsers,
     sqlQuery: sqlQuery,

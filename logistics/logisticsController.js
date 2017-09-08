@@ -5,17 +5,13 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended :true}));
 
+var logisticsMethod = require('../db');
 
 //get all the date from the between 2 dates order by product
 //Date format (YYYY-MM-DD)
-router.get('/start/:startDate/end/:endDate',function(req,res){
+router.get('/start/:startDate/end/:endDate',logisticsMethod.productBreakDownByDate);
 
-    res.status(200).json({
-        startDate:req.params.startDate,
-        endDate:req.params.endDate,
-        products:'fetching'
-    });
-});
+router.get('/storyThree',logisticsMethod.sqlQuery)
 
 
 module.exports = router;

@@ -5,6 +5,8 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended :true}));
 
+var orderFunction = require('../db');
+//var cl = require('../populateDB');
 //returning all the orders
 router.get('/',function(req,res){
     res.status(200).json({
@@ -15,26 +17,32 @@ router.get('/',function(req,res){
 
 
 //returns all the orders of the user
-router.get('/:userID',function(req,res){
-
-    res.status(200).json({
-        status:'on its way',
-        orderID: req.params.userID,
-        message: 'this returns all the orders of the user'
-    })
-});
+router.get('/:userID',orderFunction.allOrdersOfUsers);
 
 //returning the specific order details of the customer
+router.get('/:userID/:orderID',orderFunction.allOrdersOfUsers);
 
-router.get('/:userID/:orderID',function(req,res){
 
+//inserting the order of the user
+router.post('/:userID/',orderFunction.insertOrderOfUser);
+
+/*router.post('/:userID/',function(req,res){
+
+    console.log(req.params.userID);
+    var item = req.body.products;
+    console.log(item);
+    var items =item.split(",");
+    console.log(items);
+    var query = "select category.id as ID, category.categoryName as Category_Name from category where category.id = ANY (select category_id from productcategories where product_id = (SELECT id as pID from product where productName=$1)) LIMIT 1;"
+    for(i=0;i<items.length;i++){
+
+
+    }
     res.status(200).json({
-        userID: req.params.userID,
-        orderID: req.params.orderID,
-        status: 'waiting',
-        message: 'Specific details of the order'
+        message:'will post the order on the server',
+        item:req.body.products
     });
-})
+}); */
 
 
 module.exports =router;
